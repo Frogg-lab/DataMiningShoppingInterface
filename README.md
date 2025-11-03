@@ -7,7 +7,7 @@
 - **Name**: [Your Full Name]
 - **Student ID**: [Your ID]
 - **Course**: CAI 4002 - Artificial Intelligence
-- **Semester**: [Fall/Spring Year]
+- **Semester**: Fall 2025
 
 
 
