@@ -44,7 +44,7 @@ class AssociationRule:
     
 
 
-def confidence_apiori(data, rule: AssociationRule, isVertical=False):
+def confidence_apiori(data, rule: AssociationRule):
 
     sup_dividend = support_apiori(data, rule)
     sup_divisor = support_apiori(data, rule.first)
@@ -54,7 +54,7 @@ def confidence_apiori(data, rule: AssociationRule, isVertical=False):
     return sup_dividend / sup_divisor
 
 
-def lift_apiori(data, rule: AssociationRule, isVertical=False):
+def lift_apiori(data, rule: AssociationRule):
 
 
     conf_dividend = confidence_apiori(data, rule)
