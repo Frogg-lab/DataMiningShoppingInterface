@@ -26,7 +26,7 @@ class AssociationRule:
         else:
             self.support = support_eclat(self, data, total)
             self.confidence = confidence_eclat(self, data, total)
-            self.lift = lift_eclat(self, data, True)
+            self.lift = lift_eclat(self, data, total)
 
     def __str__(self):
         return f'{self.first} -> {self.second}'
