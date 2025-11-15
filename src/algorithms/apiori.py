@@ -1,12 +1,14 @@
 import pandas as pd
-import preprocessing
+from preprocessing import clean_data
 import formulas
 from itertools import combinations
+import time
+from memory_profiler import memory_usage
 
 products = pd.read_csv('../../data/products.csv')
 
 def apriori(data, minimum_support=0.2, minimum_confidence=0.5):
-    found_rules = {}
+    start_time = time.time()
     supported_sets = {}
     one_sets = []
     product_list = products['product_name'].tolist()
@@ -14,14 +16,14 @@ def apriori(data, minimum_support=0.2, minimum_confidence=0.5):
     n_size = 1
 
     for item in product_list:
-        if formulas.support(data, item) >= minimum_support:
+        if formulas.support_apiori(data, item) >= minimum_support:
             one_sets.append(item)
             found_sets_this_cycle +=1
 
   
     
     if found_sets_this_cycle == 0:
-        return found_rules
+        return -1
     
     supported_sets[n_size] = one_sets
     
@@ -33,7 +35,7 @@ def apriori(data, minimum_support=0.2, minimum_confidence=0.5):
         set_candidate = list(combinations(one_sets, n_size))
 
         for itemset in set_candidate:
-            if formulas.support(data, itemset) >= minimum_support:
+            if formulas.support_apiori(data, itemset) >= minimum_support:
                 found_sets.append(itemset)
                 found_sets_this_cycle+= 1
         
@@ -47,21 +49,15 @@ def apriori(data, minimum_support=0.2, minimum_confidence=0.5):
 
         one_sets = list(set(found_items))
 
+ 
 
-    return formulas.generate_all_rules(supported_sets, minimum_confidence, data)
+    ret = formulas.generate_all_rules_apiori(supported_sets, minimum_confidence, data)
 
-
+    end_time = time.time()
+    elapsed_time_ms = (end_time - start_time) * 1000
+    print(f'Apiori completed in {elapsed_time_ms} ms')
+    return ret
 
 
     
 
-
-
-
-
-
-
-
-        
-
-         
