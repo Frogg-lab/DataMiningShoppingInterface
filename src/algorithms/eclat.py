@@ -115,6 +115,6 @@ def eclat(data, minimum_support=0.2, minimum_confidence=0.5):
     end_time = time.time()
     elapsed_time_ms = (end_time - start_time) * 1000
     print(f'Eclat completed in {elapsed_time_ms} ms')
-    return elapsed_time_ms
+    return ret
 
 
