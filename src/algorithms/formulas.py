@@ -1,6 +1,7 @@
 from itertools import combinations
 import pandas as pd
 
+
 products = pd.read_csv('../../data/products.csv')
 
 #Assotiation Rule Class, -1 means unknown/not calculated
@@ -28,7 +29,7 @@ class AssociationRule:
             self.lift = lift_eclat(self, data, True)
 
     def __str__(self):
-        return f'{self.first} -> {self.second}\n, Support {self.support}, Confidence {self.confidence}'
+        return f'{self.first} -> {self.second}'
     
     def __eq__(self, other):
         return self.first == other.first and self.second == other.second
