@@ -48,7 +48,7 @@ def apriori(data, minimum_support=0.2, minimum_confidence=0.5):
         one_sets = list(set(found_items))
 
 
-    return formulas.generate_all_rules_apriori(supported_sets, minimum_confidence, data)
+    return formulas.generate_all_rules(supported_sets, minimum_confidence, data)
 
 
 
