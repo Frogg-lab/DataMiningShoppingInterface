@@ -11,20 +11,24 @@
 
 #### System Overview
 
-[2-3 sentences describing what your application does]
+#TODO
 
 #### Technical Stack
 
-- **Language**: [Python 3.x / JavaScript / Java]
+- **Language**: [Python3.11.9]
 - **Key Libraries**: [List main dependencies]
-- **UI Framework**: [If applicable]
+- **UI Framework**: [Tkinter]
 
 #### Installation
+
+#TODO
 
 ##### Prerequisites
 
 - [e.g., Python 3.8+, Node.js 14+, Java 11+]
 - [Other requirements]
+
+#TODO
 
 ##### Setup
 
@@ -67,27 +71,25 @@ cd [project-directory]
 
 ##### Apriori
 
-[2-3 sentences on your implementation approach]
+The apiori method was implemented by first cycling through all of the items in the dataset and finding the ones with confidence higher than the
+minimum confidence threshold. Then, these frequent singular items are put into size 2 itemsets and kept only if they were also frequent. This continues for
+size n until all frequent itemsets are found. Once all of the frequent itemsets are found, they are then broken down to figure out all of the possible
+association rules which meet a minimum confidence threshold, which are then returned.
 
-- Data structure: [e.g., dictionary of itemsets]
+- Data structure: [Dictonary of sizes and sets]
 - Candidate generation: [breadth-first, level-wise]
 - Pruning strategy: [minimum support]
 
 ##### Eclat
 
-[2-3 sentences on your implementation approach]
+The eclat algorithm first translates the data into a vertical format. This allows for the only data acess to be the counting and checking of the intersection of the
+tids that each item has. Instead of checking the whole dataset, a total is passed and is multiplied by the support threshold to have a minimum amount of instances needed.
+This means to check for frequency, you only have to count the tids of an item, and see if it is above or below the minimum amount, this is significantly faster than
+checking the entire dataset each time. Set generation also just takes and stores the tids that intersect for all of the items in the set.
 
-- Data structure: [e.g., TID-set representation]
-- Search strategy: [depth-first]
+- Data structure: [Dictonary with tuple key and tid values]
+- Search strategy: [breadth-first]
 - Intersection method: [set operations]
-
-##### CLOSET
-
-[2-3 sentences on your implementation approach]
-
-- Data structure: [e.g., FP-tree / prefix tree]
-- Mining approach: [closed itemsets only]
-- Closure checking: [method used]
 
 #### Performance Results
 
@@ -95,12 +97,13 @@ Tested on provided dataset (80-100 transactions after cleaning):
 
 | Algorithm | Runtime (ms) | Rules Generated | Max Memory Usage |
 | --------- | ------------ | --------------- | ---------------- |
-| Apriori   | [112-111]    | [11]            | [71 mb]          |
-| Eclat     | [34-35]      | [11 ]           | [71 mb]          |
+| Apriori   | [131]        | [11]            | []               |
+| Eclat     | [40]         | [11]            | []               |
 
 **Parameters**: min_support = 0.2, min_confidence = 0.5
 
-**Analysis**: [1-2 sentences explaining performance differences]
+**Analysis**: Runtime was calculated by runnning the program 20 times, and taking the average of the time taken. With the clean data of 88 transactions,
+Eclat was over 3 times faster than the apiori algorithm in generating the same rules.
 
 #### Project Structure
 
@@ -108,31 +111,31 @@ Tested on provided dataset (80-100 transactions after cleaning):
 project-root/
 ├── src/
 │   ├── algorithms/
-│   │   ├── apriori.[py/js/java]
-│   │   ├── eclat.[py/js/java]
-│   │   └── closet.[py/js/java]
+│   │   ├── apriori.py
+│   │   ├── eclat.py
+│   │   └── formulas.py
 │   ├── preprocessing/
-│   │   └── cleaner.[py/js/java]
+│   │   └── preprocessing.py
 │   ├── ui/
 │   │   └── [interface files]
-│   └── main.[py/js/java]
+│   └── main.py
 ├── data/
 │   ├── sample_transactions.csv
 │   └── products.csv
 ├── README.md
 ├── REPORT.pdf
 └── [requirements.txt / package.json / pom.xml]
-```
+
 
 #### Data Preprocessing
 
 Issues handled:
 
-- Empty transactions: [count] removed
-- Single-item transactions: [count] removed
-- Duplicate items: [count] instances cleaned
-- Case inconsistencies: [count] standardized
-- Invalid items: [count] removed
+- Empty transactions: [5] removed
+- Single-item transactions: [5] removed
+- Duplicate items: [9] instances cleaned
+- Case inconsistencies all standardized
+- Invalid items: [2] removed
 - Extra whitespace: trimmed from all items
 
 #### Testing
