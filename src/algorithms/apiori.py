@@ -3,7 +3,6 @@ from preprocessing import clean_data
 import formulas
 from itertools import combinations
 import time
-from memory_profiler import memory_usage
 
 products = pd.read_csv('../../data/products.csv')
 
@@ -59,5 +58,5 @@ def apriori(data, minimum_support=0.2, minimum_confidence=0.5):
     return ret
 
 
-    
+
 
