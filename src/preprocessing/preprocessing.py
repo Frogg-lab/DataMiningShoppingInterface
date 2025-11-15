@@ -73,6 +73,8 @@ def clean_data(data):
 
     data = data.drop(drop_list)
 
+
+    print()
     print('After Cleaning')
     print('--------------------------------')
     print('Valid Transactions: ', data.shape[0])
