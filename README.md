@@ -4,8 +4,8 @@
 
 #### Author Information
 
-- **Names**: Nicholas Wasserman,
-- **Student ID**: Nicholas Wasserman: 6300806
+- **Names**: Nicholas Wasserman, Jacob Van
+- **Student ID**: Nicholas Wasserman: 6300806, Jacob Van: 6414295
 - **Course**: CAI 4002 - Artificial Intelligence
 - **Semester**: Fall 2025
 
