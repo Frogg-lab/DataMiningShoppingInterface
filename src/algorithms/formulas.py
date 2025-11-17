@@ -1,6 +1,6 @@
 from itertools import combinations
 import pandas as pd
-
+import csv
 
 products = pd.read_csv('../../data/products.csv')
 
@@ -8,17 +8,17 @@ products = pd.read_csv('../../data/products.csv')
 #Try to keep even first and second as lists even if 1 item
 class AssociationRule:
     def __init__(self, first, second, data=0, isVertical = False, total = 0):
-        
+
         if isinstance(first, str):
             self.first = {first}
         else:
             self.first = set(first)
-        
+
         if isinstance(second, str):
             self.second = {second}
         else:
             self.second = set(second)
-        
+
         if isVertical == False:
             self.support = support_apiori(data, self)
             self.confidence = confidence_apiori(data, self)
@@ -30,18 +30,18 @@ class AssociationRule:
 
     def __str__(self):
         return f'{self.first} -> {self.second}'
-    
+
     def __eq__(self, other):
         return self.first == other.first and self.second == other.second
-    
+
     def __hash__(self):
         return hash((frozenset(self.first), frozenset(self.second)))
-    
+
     def __repr__(self):
         return self.__str__()
     
-    
-    
+
+
 
 
 def confidence_apiori(data, rule: AssociationRule):
@@ -179,3 +179,30 @@ def generate_all_rules_eclat(minimum_confidence, found_sets, total):
                 real_rules.add(rules)
     
     return real_rules
+
+def format_rules(rules):
+    formatted = []
+    for rule in rules:
+        antecedent = ', '.join(rule['antecedent']) \
+            if isinstance(rule['antecedent'], (list, tuple)) \
+            else rule['antecedent']
+        consequent = ', '.join(rule['consequent']) \
+            if isinstance(rule['consequent'], (list, tuple)) \
+            else rule['consequent']
+        formatted.append(
+            f"Rule: [{antecedent}] => [{consequent}] | "
+            f"Support: {rule['support']:.2f} | "
+            f"Confidence: {rule['confidence']:.2f} | "
+            f"Lift: {rule['lift']:.2f}"
+        )
+    return '\n'.join(formatted)
+
+def export_rules_to_csv(rules, filename="rules_output.csv"):
+    with open(filename, mode='w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerow(['Antecedent', 'Consequent', 'Support', 'Confidence', 'Lift'])
+
+        for rule in rules:
+            antecedent = ', '.join(rule['antecedent']) if isinstance(rule['antecedent'], (list, tuple)) else rule['antecedent']
+            consequent = ', '.join(rule['consequent']) if isinstance(rule['consequent'], (list, tuple)) else rule['consequent']
+            writer.writerow([antecedent, consequent, f"{rule['support']:.2f}", f"{rule['confidence']:.2f}", f"{rule['lift']:.2f}"])

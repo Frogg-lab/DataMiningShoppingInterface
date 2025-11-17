@@ -1,8 +1,10 @@
 #USED CHATGPT TO GENERATE STANDARD TKINTER WINDOW
 import tkinter as tk
 from tkinter import messagebox
-
-
+from preprocessing import clean_data
+from src.algorithms.apiori import apriori
+from src.algorithms.eclat import eclat
+from src.algorithms.formulas import format_rules, export_rules_to_csv
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
@@ -48,11 +50,38 @@ class App(tk.Tk):
     def _show_about(self):
         messagebox.showinfo("About", "Data Mining Shopping Interface\nTkinter demo window")
 
-
 def run_app():
     app = App()
     app.mainloop()
 
-
 if __name__ == "__main__":
     run_app()
+
+# Load dataset
+data = pd.read_csv("sample_transactions.csv")
+data = clean_data(data)
+
+# Choose algorithm
+use_apriori = True  # Toggle this to False to use ECLAT
+
+# Run algorithm
+if use_apriori:
+    print("Running Apriori...\n")
+    rules = apriori(data, minimum_support=0.2, minimum_confidence=0.5)
+    output_file = "apriori_rules.csv"
+else:
+    print("Running ECLAT...\n")
+    rules = eclat(data, minimum_support=0.2, minimum_confidence=0.5)
+    output_file = "eclat_rules.csv"
+
+# Handle no result
+if rules == -1 or not rules:
+    print("No rules generated. Try lowering support/confidence thresholds.")
+else:
+    # Format and display rules
+    formatted = format_rules(rules, sort_by='lift')
+    print("\n".join(formatted))
+
+    # Export to CSV
+    export_rules_to_csv(rules, output_file)
+    print(f"\n✅ Rules exported to: {output_file}")
