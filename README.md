@@ -4,44 +4,47 @@
 
 #### Author Information
 
-- **Names**: Nicholas Wasserman, Jacob Van
-- **Student ID**: Nicholas Wasserman: 6300806, Jacob Van: 6414295
+- **Names**: Nicholas Wasserman, Jacob Van, Ethan Drouillard
+- **Student ID**: Nicholas Wasserman: 6300806, Jacob Van: 6414295, Ethan Drouillard: 6321129
 - **Course**: CAI 4002 - Artificial Intelligence
 - **Semester**: Fall 2025
 
 #### System Overview
 
-#TODO
+This project simulates a virtual supermarket where users can interactively select products and analyze purchasing behavior. It utilizes association rule mining (Apriori and ECLAT) to uncover product relationships based on customer transactions. The interface supports importing transaction data, preprocessing, and running mining algorithms to generate rules, which are then queried and displayed in an accessible UI.
+
 
 #### Technical Stack
 
 - **Language**: [Python3.11.9]
 - **Key Libraries**: [List main dependencies]
+   - pandas
+  - memory_profiler
+  - itertools (Python standard)
+  - csv (Python standard)
+  - tkinter (UI framework)
 - **UI Framework**: [Tkinter]
 
 #### Installation
 
-#TODO
+This project runs locally using Python and standard libraries.
 
 ##### Prerequisites
 
-- [e.g., Python 3.8+, Node.js 14+, Java 11+]
-- [Other requirements]
-
-#TODO
+- Python 3.10 or later
+- pip (Python package manager)
 
 ##### Setup
 
-```bash
-# Clone or extract project
-cd [project-directory]
-
 # Install dependencies
-[command to install dependencies]
+
+pip install -r requirements.txt
 
 # Run application
-[command to start application]
-```
+python src/main.py
+
+If requirements.txt is not available, install manually:
+pip install pandas memory_profiler
 
 #### Usage
 
@@ -97,8 +100,8 @@ Tested on provided dataset (80-100 transactions after cleaning):
 
 | Algorithm | Runtime (ms) | Rules Generated | Max Memory Usage |
 | --------- | ------------ | --------------- | ---------------- |
-| Apriori   | [131]        | [11]            | []               |
-| Eclat     | [40]         | [11]            | []               |
+| Apriori   | [131]        | [11]            | [58.90 MiB]               |
+| Eclat     | [40]         | [11]            | [57.42 MiB]               |
 
 **Parameters**: min_support = 0.2, min_confidence = 0.5
 
@@ -150,16 +153,67 @@ Verified functionality:
 
 Test cases:
 
-- [Describe 2-3 key test scenarios]
+For testing since i couldnt get packages to work I added the preprocessing script also into the algorithms folder ~ Nick
+
+The system was validated using both synthetic and real-world transaction data. Below are key test scenarios that were executed to ensure robustness and correctness:
+
+Test Case 1: CSV Import and Parsing
+
+Input: sample_transactions.csv with varying item formatting and inconsistencies
+
+Expected Outcome: Transactions are parsed into item lists; extra whitespace, casing differences, and duplicates are cleaned
+
+Result: Successful import with standardized and structured transaction records
+
+Test Case 2: Preprocessing Filters
+
+Input: Transactions containing empty rows, invalid items, or single-item entries
+
+Expected Outcome: Empty and single-item transactions are removed; invalid entries are flagged and cleaned
+
+Result: Dataset reduced to valid, clean transactions suitable for mining
+
+Test Case 3: Apriori Algorithm Accuracy
+
+Input: Cleaned dataset with minimum support = 0.2 and confidence = 0.5
+
+Expected Outcome: All valid association rules are generated, with support and confidence thresholds met
+
+Result: 11 rules generated with average runtime of ~130ms
+
+Test Case 4: ECLAT Efficiency
+
+Input: Same cleaned dataset as Apriori test
+
+Expected Outcome: ECLAT generates the same rule set in less time using vertical data format
+
+Result: 11 rules generated with significantly faster runtime (~40ms)
+
+Test Case 5: UI Interaction
+
+Input: Manual transaction creation and dropdown queries
+
+Expected Outcome: Items are interactively added to transactions, and recommendations reflect mined associations
+
+Result: Real-time feedback and responsive results returned from mining layer
 
 #### Known Limitations
 
-[List any known issues or constraints, if applicable]
+None applicable
 
 #### AI Tool Usage
 
-ChatGPT Was used for a few things. It was used to write boiler plate UI code. ChatGPT was also used to describe type difference conversion bugs, aswell as how to time the function and
-how to measure memory used.
+ChatGPT was used to assist with several development tasks throughout the project. Specifically, it helped:
+
+Generate boilerplate code for the Tkinter-based UI layout
+
+Diagnose and resolve type conversion errors during algorithm integration
+
+Implement function timing for performance benchmarking
+
+Integrate memory profiling to track algorithm efficiency
+
+These contributions streamlined development and ensured clarity in debugging and optimization.
 
 #### References
 
