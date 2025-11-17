@@ -1,11 +1,15 @@
-#USED CHATGPT TO GENERATE STANDARD TKINTER WINDOW
 import sys
 from pathlib import Path
 import tkinter as tk
 from tkinter import messagebox
 
-# Add src directory to path so we can import from it
-sys.path.insert(0, str(Path(__file__).parent))
+# Ensure src/ and project root are importable
+current_file = Path(__file__).resolve()
+src_dir = current_file.parent
+project_root = src_dir.parent
+
+sys.path.insert(0, str(src_dir))
+sys.path.insert(0, str(project_root))
 
 from ui.product_browser import ProductBrowser
 
@@ -14,7 +18,7 @@ class App(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title("Data Mining Shopping Interface")
-        self.geometry("800x560")
+        self.geometry("950x600")
         self._create_widgets()
         self._create_menu()
 
@@ -32,21 +36,18 @@ class App(tk.Tk):
         self.config(menu=menubar)
 
     def _create_widgets(self):
-        # Main content frame
-        frame = tk.Frame(self, padx=12, pady=12)
-        frame.pack(fill=tk.BOTH, expand=True)
+        container = tk.Frame(self, padx=12, pady=12)
+        container.pack(fill=tk.BOTH, expand=True)
 
-        # Embed the modular ProductBrowser frame
-        browser = ProductBrowser(frame)
+        browser = ProductBrowser(container)
         browser.pack(fill=tk.BOTH, expand=True)
 
-        # Status bar at bottom
         self.status_var = tk.StringVar(value="Ready")
-        status = tk.Label(self, textvariable=self.status_var, bd=1, relief=tk.SUNKEN, anchor=tk.W)
-        status.pack(side=tk.BOTTOM, fill=tk.X)
+        tk.Label(self, textvariable=self.status_var, bd=1, relief=tk.SUNKEN, anchor=tk.W)\
+            .pack(side=tk.BOTTOM, fill=tk.X)
 
     def _show_about(self):
-        messagebox.showinfo("About", "Data Mining Shopping Interface\nProduct browser demo window")
+        messagebox.showinfo("About", "Data Mining Shopping Interface\nCreated by Jacob")
 
 
 def run_app():
