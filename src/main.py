@@ -1,13 +1,20 @@
 #USED CHATGPT TO GENERATE STANDARD TKINTER WINDOW
+import sys
+from pathlib import Path
 import tkinter as tk
 from tkinter import messagebox
+
+# Add src directory to path so we can import from it
+sys.path.insert(0, str(Path(__file__).parent))
+
+from ui.product_browser import ProductBrowser
 
 
 class App(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title("Data Mining Shopping Interface — Demo Window")
-        self.geometry("640x360")
+        self.title("Data Mining Shopping Interface")
+        self.geometry("800x560")
         self._create_widgets()
         self._create_menu()
 
@@ -29,24 +36,17 @@ class App(tk.Tk):
         frame = tk.Frame(self, padx=12, pady=12)
         frame.pack(fill=tk.BOTH, expand=True)
 
-        label = tk.Label(frame, text="Welcome to the Data Mining Shopping Interface demo!", font=(None, 14))
-        label.pack(pady=(0, 12))
-
-        btn = tk.Button(frame, text="Click me", command=self._on_click)
-        btn.pack()
+        # Embed the modular ProductBrowser frame
+        browser = ProductBrowser(frame)
+        browser.pack(fill=tk.BOTH, expand=True)
 
         # Status bar at bottom
         self.status_var = tk.StringVar(value="Ready")
         status = tk.Label(self, textvariable=self.status_var, bd=1, relief=tk.SUNKEN, anchor=tk.W)
         status.pack(side=tk.BOTTOM, fill=tk.X)
 
-    def _on_click(self):
-        self.status_var.set("Button clicked — showing message")
-        messagebox.showinfo("Hello", "This is a standard Tkinter window example.")
-        self.status_var.set("Ready")
-
     def _show_about(self):
-        messagebox.showinfo("About", "Data Mining Shopping Interface\nTkinter demo window")
+        messagebox.showinfo("About", "Data Mining Shopping Interface\nProduct browser demo window")
 
 
 def run_app():
