@@ -1,1 +1,6 @@
- pandas
+pandas
+itertools
+memory_profiler
+pathlib
+numpy
+typing
